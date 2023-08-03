@@ -19,9 +19,12 @@ int main(int argc, char **argv)
         }
         return 1;
     }
-    
-    BitcoinExchange btc("data.csv");
-    btc.execute(argv[1]);
+    try{
+        BitcoinExchange btc("../data.csv");
+        btc.execute(argv[1]);
+    } catch(std::invalid_argument& e){
+        std::cerr << e.what() << std::endl;
+    }
     return 0;
 
 }

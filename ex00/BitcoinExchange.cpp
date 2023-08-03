@@ -10,7 +10,11 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange &ref)
 BitcoinExchange::BitcoinExchange(const std::string filename)
 {
     this->file = filename;
-    initDatabase(filename);
+    if (initDatabase(filename))
+    {
+        throw std::invalid_argument("Invalid database file name");
+    }
+
 }
 BitcoinExchange::~BitcoinExchange(void)
 {
@@ -38,10 +42,10 @@ std::string BitcoinExchange::getFilename(void)
     return this->file;
 }
 
-void BitcoinExchange::initDatabase(const std::string filename)
+int BitcoinExchange::initDatabase(const std::string filename)
 {
 	std::string line, date, value;
-	std::ifstream file (filename);
+	std::ifstream file(filename.c_str());
 
     if(file.is_open())
 	{
@@ -53,9 +57,9 @@ void BitcoinExchange::initDatabase(const std::string filename)
                 db[date] = atof(value.c_str());
             }
 	    }
+        return 0;
 	}
-	else
-		std::cout<<"Could not open the file\n";
+    return 1;
 }
 
 
@@ -152,7 +156,7 @@ bool    checkValue(std::string val)
     }
     if (nb > 1000)
     {
-        std::cout << "Error: too large a number." << std::endl;
+        std::cout << "Error: too large number." << std::endl;
         return false;
     }
     return true;
@@ -197,7 +201,7 @@ void    BitcoinExchange::execute(std::string fname)
 {
     double nb;
 	std::string line, date, value;
-    std::ifstream file(fname);
+    std::ifstream file(fname.c_str());
 
 
     if (file.is_open())
@@ -214,12 +218,16 @@ void    BitcoinExchange::execute(std::string fname)
                     std::cout << "Error: too old date for the database => " << date << std::endl;
                 else
                 {
-                    nb = atof(line.c_str() + getValueIndex(line));
+                    nb = std::atof(line.c_str() + getValueIndex(line));
                     std::cout << date << " => " << nb << " = " << (nb * db[dbKey]) << std::endl;
                 }
                 
             }
        }
+    }
+    else
+    {
+        throw std::invalid_argument("Could not open the input file");
     }
 
 }

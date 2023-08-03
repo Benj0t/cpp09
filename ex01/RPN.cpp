@@ -1,65 +1,47 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   RPN.cpp                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ahammad <ahammad@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/30 15:23:10 by ahammad           #+#    #+#             */
-/*   Updated: 2023/03/30 16:13:01 by ahammad          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "RPN.hpp"
 
-void insert_at_bottom(std::stack<int>& pile, int x)
+void insertBottom(std::stack<int>& stack, int x)
 {
- 
-    if (pile.size() == 0) 
+    if (!(stack.size()))
     {
-        pile.push(x);
+        stack.push(x);
+        return;
     }
-    else 
+    int a = stack.top();
+    stack.pop();
+    insertBottom(stack, x);
+    stack.push(a);
+}
+
+void rev(std::stack<int>& stack)
+{
+    if (stack.size() > 0) 
     {
-        int a = pile.top();
-        pile.pop();
-        insert_at_bottom(pile, x);
- 
-        pile.push(a);
+        int x = stack.top();
+        stack.pop();
+        rev(stack);
+        insertBottom(stack, x);
     }
 }
 
-void ft_reverse(std::stack<int>& pile)
+void    add(int a, int b, std::stack<int> *stack)
 {
-    if (pile.size() > 0) 
-    {
-        int x = pile.top();
-        pile.pop();
-        ft_reverse(pile);
- 
-        insert_at_bottom(pile, x);
-    }
-    return;
+    int c = b + a;
+    stack->push(c);
 }
 
-void    ft_addition(int a, int b, std::stack<int> *pile)
-{
-    int c = a + b;
-    pile->push(c);
-}
-
-void    ft_soustraction(int a, int b, std::stack<int> *pile)
+void    minus(int a, int b, std::stack<int> *stack)
 {
     int c = b - a;
-    pile->push(c);
+    stack->push(c);
 }
-void    ft_multiplication(int a, int b, std::stack<int> *pile)
+void    mult(int a, int b, std::stack<int> *stack)
 {
     int c = b * a;
-    pile->push(c);
+    stack->push(c);
 }
-void    ft_division(int a, int b, std::stack<int> *pile)
+void    div(int a, int b, std::stack<int> *stack)
 {
     int c = b / a;
-    pile->push(c);
+    stack->push(c);
 }

@@ -1,10 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <deque>
-#include <cctype>
+#include "PmergeMe.hpp"
 
 int areDigit(char *str)
 {
@@ -16,7 +10,7 @@ int areDigit(char *str)
 
 // VECTOR //
 
-void sortLeftPair(std::vector<std::pair<unsigned int, unsigned int>> &vec, int n) // 0 = first item || 1 = second item
+void sortLeftPair(std::vector<std::pair<unsigned int, unsigned int> > &vec, int n) // 0 = first item || 1 = second item
 {
     if (n <= 1)
         return;
@@ -33,7 +27,7 @@ void sortLeftPair(std::vector<std::pair<unsigned int, unsigned int>> &vec, int n
     vec[j + 1].first = last;
 }
 
-void sortRightPair(std::vector<std::pair<unsigned int, unsigned int>> &vec, int n) // 0 = first item || 1 = second item
+void sortRightPair(std::vector<std::pair<unsigned int, unsigned int> > &vec, int n) // 0 = first item || 1 = second item
 {
     if (n <= 1)
         return;
@@ -50,25 +44,16 @@ void sortRightPair(std::vector<std::pair<unsigned int, unsigned int>> &vec, int 
     vec[j + 1].second = last;
 }
 
-std::vector<std::pair<unsigned int, unsigned int>> initPair(std::vector<unsigned int> ref)
+std::vector<std::pair<unsigned int, unsigned int> > initPair(std::vector<unsigned int> ref)
 {
-    std::vector<std::pair<unsigned int, unsigned int>> ret;
+    std::vector<std::pair<unsigned int, unsigned int> > ret;
 
-    int i = 0;
+    unsigned int i = 0;
     while (i < ref.size() - 1)
     {
         ret.push_back(std::make_pair(ref[i], ref[i+1]));
         i += 2;
     }
-    // for (std::vector<std::pair<unsigned int, unsigned int>>::iterator it = ret.begin(); it != ret.end(); it++)
-    //     if (it->first > it->second)
-    //         std::swap(it->first, it->second);
-
-
-    std::cout << "PAIR VECTOR\n";
-    for (std::vector<std::pair<unsigned int, unsigned int>>::iterator it = ret.begin(); it != ret.end(); it++)
-        std::cout << it->first << " " << it->second << std::endl;
-    std::cout << "END PAIR VECTOR\n\n";
     // We sort the values of the first slots;
     sortLeftPair(ret, ret.size());
     // We do the same for the second ones;
@@ -78,12 +63,12 @@ std::vector<std::pair<unsigned int, unsigned int>> initPair(std::vector<unsigned
 std::vector<unsigned int> fjSort(std::vector<unsigned int> ref)
 {
     //init vector pair to make merge sort
-    std::vector<std::pair<unsigned int, unsigned int>> vecPair = initPair(ref);
+    std::vector<std::pair<unsigned int, unsigned int> > vecPair = initPair(ref);
     std::vector<unsigned int> result;
     std::vector<unsigned int>::iterator it;
 
-    std::vector<std::pair<unsigned int, unsigned int>>::iterator left = vecPair.begin();
-    std::vector<std::pair<unsigned int, unsigned int>>::iterator right = vecPair.begin();
+    std::vector<std::pair<unsigned int, unsigned int> >::iterator left = vecPair.begin();
+    std::vector<std::pair<unsigned int, unsigned int> >::iterator right = vecPair.begin();
     while (left != vecPair.end() && right != vecPair.end())
     {
         if (left->first <= right->second)
@@ -95,10 +80,6 @@ std::vector<unsigned int> fjSort(std::vector<unsigned int> ref)
             result.push_back(right->second);
             right++;
         }
-            // std::cout << "result: ";
-            // for (int i = 0; i < result.size(); i++)
-            //     std::cout << result[i] << " ";
-            // std::cout << "\n";
     }        
     while (left != vecPair.end())
     {
@@ -125,7 +106,7 @@ std::vector<unsigned int> fjSort(std::vector<unsigned int> ref)
 // DEQUE //
 
 
-void sortLeftPair(std::deque<std::pair<unsigned int, unsigned int>> &vec, int n) // 0 = first item || 1 = second item
+void sortLeftPair(std::deque<std::pair<unsigned int, unsigned int> > &vec, int n) // 0 = first item || 1 = second item
 {
     if (n <= 1)
         return;
@@ -142,7 +123,7 @@ void sortLeftPair(std::deque<std::pair<unsigned int, unsigned int>> &vec, int n)
     vec[j + 1].first = last;
 }
 
-void sortRightPair(std::deque<std::pair<unsigned int, unsigned int>> &vec, int n) // 0 = first item || 1 = second item
+void sortRightPair(std::deque<std::pair<unsigned int, unsigned int> > &vec, int n) // 0 = first item || 1 = second item
 {
     if (n <= 1)
         return;
@@ -159,25 +140,16 @@ void sortRightPair(std::deque<std::pair<unsigned int, unsigned int>> &vec, int n
     vec[j + 1].second = last;
 }
 
-std::deque<std::pair<unsigned int, unsigned int>> initPair(std::deque<unsigned int> ref)
+std::deque<std::pair<unsigned int, unsigned int> > initPair(std::deque<unsigned int> ref)
 {
-    std::deque<std::pair<unsigned int, unsigned int>> ret;
+    std::deque<std::pair<unsigned int, unsigned int> > ret;
 
-    int i = 0;
+    unsigned int i = 0;
     while (i < ref.size() - 1)
     {
         ret.push_back(std::make_pair(ref[i], ref[i+1]));
         i += 2;
     }
-    // for (std::deque<std::pair<unsigned int, unsigned int>>::iterator it = ret.begin(); it != ret.end(); it++)
-    //     if (it->first > it->second)
-    //         std::swap(it->first, it->second);
-
-
-    std::cout << "PAIR deque\n";
-    for (std::deque<std::pair<unsigned int, unsigned int>>::iterator it = ret.begin(); it != ret.end(); it++)
-        std::cout << it->first << " " << it->second << std::endl;
-    std::cout << "END PAIR deque\n\n";
     // We sort the values of the first slots;
     sortLeftPair(ret, ret.size());
     // We do the same for the second ones;
@@ -187,12 +159,12 @@ std::deque<std::pair<unsigned int, unsigned int>> initPair(std::deque<unsigned i
 std::deque<unsigned int> fjSort(std::deque<unsigned int> ref)
 {
     //init deque pair to make merge sort
-    std::deque<std::pair<unsigned int, unsigned int>> vecPair = initPair(ref);
+    std::deque<std::pair<unsigned int, unsigned int> > vecPair = initPair(ref);
     std::deque<unsigned int> result;
     std::deque<unsigned int>::iterator it;
 
-    std::deque<std::pair<unsigned int, unsigned int>>::iterator left = vecPair.begin();
-    std::deque<std::pair<unsigned int, unsigned int>>::iterator right = vecPair.begin();
+    std::deque<std::pair<unsigned int, unsigned int> >::iterator left = vecPair.begin();
+    std::deque<std::pair<unsigned int, unsigned int> >::iterator right = vecPair.begin();
     while (left != vecPair.end() && right != vecPair.end())
     {
         if (left->first <= right->second)
@@ -204,10 +176,6 @@ std::deque<unsigned int> fjSort(std::deque<unsigned int> ref)
             result.push_back(right->second);
             right++;
         }
-            // std::cout << "result: ";
-            // for (int i = 0; i < result.size(); i++)
-            //     std::cout << result[i] << " ";
-            // std::cout << "\n";
     }        
     while (left != vecPair.end())
     {
@@ -232,6 +200,21 @@ std::deque<unsigned int> fjSort(std::deque<unsigned int> ref)
 
 int main(int argc, char **argv)
 {
+    /*
+• On the first line you must display an explicit text followed by the unsorted positive
+integer sequence.
+
+• On the second line you must display an explicit text followed by the sorted positive
+integer sequence.
+
+• On the third line you must display an explicit text indicating the time used by
+your algorithm by specifying the first container used to sort the positive integer
+sequence.
+
+• On the last line you must display an explicit text indicating the time used by
+your algorithm by specifying the second container used to sort the positive integer
+sequence.*/
+
     if (argc < 2)
     {
         std::cout << "Program needs a positive integer list to work." << std::endl;
@@ -257,16 +240,29 @@ int main(int argc, char **argv)
                return 1;
             }
         }
-        std::vector <unsigned int> vresult = fjSort(vec);
-        std::deque <unsigned int> dresult = fjSort(deque);
-        for (int i = 0; i < vresult.size(); i++)
-            std::cout << vresult[i] << " ";
+        std:: cout << "Unsorted integer list: ";
+        for (unsigned int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
         std::cout << '\n';
 
-        std::cout << "\n\n DEQUE:\n";
-        for (int i = 0; i < dresult.size(); i++)
-            std::cout << dresult[i] << " ";
-        std::cout << '\n';
+        clock_t vStart, vEnd, dStart, dEnd;
+        double vTimeTaken, dTimeTaken;
+        vStart = clock();
+        std::vector <unsigned int> vresult = fjSort(vec);
+        vEnd = clock();
+        vTimeTaken = double(vEnd - vStart) / double(CLOCKS_PER_SEC);
+
+        dStart = clock();
+        std::deque <unsigned int> dresult = fjSort(deque);
+        dEnd = clock();
+        dTimeTaken = double(dEnd - dStart) / double(CLOCKS_PER_SEC);
+
+        std::cout << "Sorted integer list: ";
+        for (unsigned int i = 0; i < vresult.size(); i++)
+            std::cout << vresult[i] << " ";
+        std::cout << std::endl;
+        std::cout << "Time used to sort " << vec.size() << " elements with the container vector: " << std::fixed << vTimeTaken << " seconds" << std::endl;
+        std::cout << "Time used to sort " << deque.size() << " elements with the container deque: " << std::fixed << dTimeTaken << " seconds" << std::endl;
     }
     return 0;
 }

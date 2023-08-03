@@ -2,12 +2,11 @@
 #define RPN_HPP
 #include <stack>
 #include <iostream>
-//nom des prototypes
 
-void    ft_addition(int a, int b, std::stack<int> *pile);
-void    ft_reverse(std::stack<int>& pile);
-void    insert_at_bottom(std::stack<int>& pile, int x);
-void    ft_soustraction(int a, int b, std::stack<int> *pile);
-void    ft_multiplication(int a, int b, std::stack<int> *pile);
-void    ft_division(int a, int b, std::stack<int> *pile);
+void    add(int a, int b, std::stack<int> *stack);
+void    rev(std::stack<int>& stack);
+void    insertBottom(std::stack<int>& stack, int x);
+void    minus(int a, int b, std::stack<int> *stack);
+void    mult(int a, int b, std::stack<int> *stack);
+void    div(int a, int b, std::stack<int> *stack);
 #endif

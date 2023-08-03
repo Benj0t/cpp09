@@ -1,11 +1,12 @@
 #ifndef BITCOINEXCHANGE_HPP
 # define BITCOINEXCHANGE_HPP
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <map>
+# include <iostream>
+# include <fstream>
+# include <string>
+# include <sstream>
+# include <cstdlib>
+# include <map>
 
 class BitcoinExchange{
     private:
@@ -19,7 +20,7 @@ class BitcoinExchange{
         BitcoinExchange(const std::string filename);
 
     private:
-        void initDatabase(const std::string filename);
+        int initDatabase(const std::string filename);
     public:
         std::map<std::string, double> getDatabase(void);
         std::string getFilename(void);

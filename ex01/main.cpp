@@ -1,116 +1,111 @@
 #include "RPN.hpp"
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
     if (argc != 2)
     {
-        std::cerr << "les arguments ne sont pas suffisant\n"<< std::endl;
-        std::cerr << "Error";
+        std::cout << "The program only takes two arguments.";
         return (0);
-    }
-    else
-    {
-        std::string s = argv[1];
     }
     std::string s = argv[1];
 
     int i;
     i = 0;
-    std::stack<int> pile; //utilisation de la stack pour stocker les chiffres
+    std::stack<int> stack;
     while (s[i])
     {
         if (isdigit(s[i]))
-        {
-            pile.push(s[i] - '0');
-        }
+            stack.push(s[i] - '0');
         else
         {
             if (s[i] == '+')
             {
-				if (pile.size() >= 2)
+				if (stack.size() >= 2)
                 {
-                    int a = pile.top();
-				    pile.pop();
-				    int b = pile.top();
-				    pile.pop();
-				    ft_addition(a, b, &pile);
+                    int a = stack.top();
+				    stack.pop();
+				    int b = stack.top();
+				    stack.pop();
+				    add(a, b, &stack);
                 }
                 else 
                 {
                     std::cout << "Error";
-                    return (0);
+                    return (1);
                 }
             }
-            else if (s[i] == '-')
+            else if (s[i] == '*')
             {
-				if (pile.size() >= 2)
+				if (stack.size() >= 2)
                 {
-                    int a = pile.top();
-				    pile.pop();
-				    int b = pile.top();
-				    pile.pop();
-				    ft_soustraction(a, b, &pile);
+                    int a = stack.top();
+				    stack.pop();
+				    int b = stack.top();
+				    stack.pop();
+				    mult(a, b, &stack);
                 }
                 else 
                 {
                     std::cout << "Error";
-                    return (0);
-                }
+                    return (1);
+                }            
             }
             else if (s[i] == '/')
             {
-				if (pile.size() >= 2)
+				if (stack.size() >= 2)
                 {
-                    int a = pile.top();
-				    pile.pop();
-				    int b = pile.top();
-				    pile.pop();
-                    if (a == 0)
+                    int a = stack.top();
+				    stack.pop();
+				    int b = stack.top();
+				    stack.pop();
+                    if (a == 0) // Protection for division by 0
                     {
-                        std::cout << "invalid argument" << std::endl;
-                        return (0);
+                        std::cout << "Error: bad formatting" << std::endl;
+                        return (1);
                     }
-				    ft_division(a, b, &pile);
+				    div(a, b, &stack);
                 }
                 else 
                 {
                     std::cout << "Error";
-                    return (0);
-                }            }
-            else if (s[i] == '*')
+                    return (1);
+                }            
+            }
+            else if (s[i] == '-')
             {
-				if (pile.size() >= 2)
+				if (stack.size() >= 2)
                 {
-                    int a = pile.top();
-				    pile.pop();
-				    int b = pile.top();
-				    pile.pop();
-				    ft_multiplication(a, b, &pile);
+                    int a = stack.top();
+				    stack.pop();
+				    int b = stack.top();
+				    stack.pop();
+				    minus(a, b, &stack);
                 }
                 else 
                 {
-                    std::cout << "Error";
-                    return (0);
-                }            }
+                    std::cout << "Error: bad formatting";
+                    return (1);
+                }
+            }
             else if ( s[i] == ' ')
             {
-                
+                //just skip
             }
             else
             {
                 std::cout << "Error\n";
-                return (0);
+                return (1);
             }
         }
         i++;
     }
 
-    ft_reverse(pile);
+    rev(stack);
 
-    while (!pile.empty())
+    while (!stack.empty())
     {
-        std::cout << pile.top() << " ";
-        pile.pop();
+        std::cout << stack.top() << " ";
+        stack.pop();
     }
     std::cout << "\n";
     return (0);
